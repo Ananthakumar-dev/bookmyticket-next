@@ -6,7 +6,6 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import SeatLayoutForm from "@/components/SeatLayout/Form";
-import {z} from "zod";
 
 const Layout = () => {
     return (
@@ -24,9 +23,9 @@ const Layout = () => {
                                 price: 0,
                                 section_number: 1,
                                 number_of_rows: 0,
+                                columns: []
                             }
                         ],
-                        columns: []
                     }}
                 />
             </ResizablePanel>

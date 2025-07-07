@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 
@@ -14,10 +14,10 @@ import {SeatLayoutProvider} from "@/context/SeatLayoutContext";
 
 const seatRows = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',' M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z' ];
 const divisions = ['sections', 'columns', 'rows'];
-let activeDivision = 0;
 const SeatLayoutForm = (
     {defaultValues}: {defaultValues: screenLayoutFormSchemaType}
 ) => {
+    const [ activeDivision, setActiveDivision ] = useState(0);
     const form = useForm<screenLayoutFormSchemaType>({
         resolver: zodResolver(screenLayoutFormSchema),
         defaultValues: defaultValues
@@ -28,7 +28,7 @@ const SeatLayoutForm = (
     }
 
     const moveToNextStep = () => {
-        activeDivision++;
+        setActiveDivision((division) => division + 1);
     }
 
     return (
@@ -37,7 +37,7 @@ const SeatLayoutForm = (
                 <div className="flex items-center justify-between text-sm">
                     {
                         divisions.map((el, index) => (
-                            <div className={`flex items-center gap-1 ${activeDivision === index ? 'active' : ''}`} key={el}>
+                            <div className={`flex items-center gap-1 ${activeDivision === index ? 'active' : ''}`} key={el} onClick={() => setActiveDivision(index)}>
                                 <span className="p-2 border rounded-full text-capitalize">{index + 1}</span>
                                 {el}
 
@@ -48,7 +48,6 @@ const SeatLayoutForm = (
                         ))
                     }
                 </div>
-
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <Section />

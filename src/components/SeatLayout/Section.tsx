@@ -10,14 +10,11 @@ import {
 
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {Plus, Trash} from "lucide-react";
+import {ArrowRight, Plus, Trash} from "lucide-react";
 import {useSeatLayout} from "@/context/SeatLayoutContext";
-import {RightArrow} from "next/dist/client/components/react-dev-overlay/ui/icons/right-arrow";
-
-const activeDivision = 0;
 
 const Section = () => {
-    const {form, moveToNextStep} = useSeatLayout();
+    const {form, moveToNextStep, activeDivision} = useSeatLayout();
     const {fields: sectionFields, append: sectionAppend, remove: sectionRemove} = useFieldArray({
         control: form.control,
         name: 'sections'
@@ -93,25 +90,12 @@ const Section = () => {
 
                                         {/*<FormField*/}
                                         {/*    control={form.control}*/}
-                                        {/*    name={`sections.${index}.starting_row_value`}*/}
+                                        {/*    name={`sections.${index}.number_of_columns_for_the_section`}*/}
                                         {/*    render={({field}) => (*/}
                                         {/*        <FormItem className="min-w-[30%]">*/}
-                                        {/*            <FormLabel>Rows Starting value</FormLabel>*/}
+                                        {/*            <FormLabel>Number of columns that section contain</FormLabel>*/}
                                         {/*            <FormControl>*/}
-                                        {/*                <Select onValueChange={field.onChange}*/}
-                                        {/*                        defaultValue={field.value}>*/}
-                                        {/*                    <SelectTrigger className="w-full">*/}
-                                        {/*                        <SelectValue placeholder="Select row value"/>*/}
-                                        {/*                    </SelectTrigger>*/}
-                                        {/*                    <SelectContent>*/}
-                                        {/*                        {*/}
-                                        {/*                            seatRows.map(el => (*/}
-                                        {/*                                <SelectItem value={el} key={el}>*/}
-                                        {/*                                    {el}*/}
-                                        {/*                                </SelectItem>))*/}
-                                        {/*                        }*/}
-                                        {/*                    </SelectContent>*/}
-                                        {/*                </Select>*/}
+                                        {/*                <Input type="number" placeholder="Section name" {...field} />*/}
                                         {/*            </FormControl>*/}
                                         {/*            <FormMessage/>*/}
                                         {/*        </FormItem>*/}
@@ -120,30 +104,60 @@ const Section = () => {
 
                                         {/*<FormField*/}
                                         {/*    control={form.control}*/}
-                                        {/*    name={`sections.${index}.ending_row_value`}*/}
+                                        {/*    name={`sections.${index}.max_seats_that_column_contains`}*/}
                                         {/*    render={({field}) => (*/}
                                         {/*        <FormItem className="min-w-[30%]">*/}
-                                        {/*            <FormLabel>Rows ending value</FormLabel>*/}
+                                        {/*            <FormLabel>Maximum seats that column contains</FormLabel>*/}
                                         {/*            <FormControl>*/}
-                                        {/*                <Select onValueChange={field.onChange}*/}
-                                        {/*                        defaultValue={field.value}>*/}
-                                        {/*                    <SelectTrigger className="w-full">*/}
-                                        {/*                        <SelectValue placeholder="Select row value"/>*/}
-                                        {/*                    </SelectTrigger>*/}
-                                        {/*                    <SelectContent>*/}
-                                        {/*                        {*/}
-                                        {/*                            seatRows.map(el => (*/}
-                                        {/*                                <SelectItem value={el} key={el}>*/}
-                                        {/*                                    {el}*/}
-                                        {/*                                </SelectItem>))*/}
-                                        {/*                        }*/}
-                                        {/*                    </SelectContent>*/}
-                                        {/*                </Select>*/}
+                                        {/*                <Input placeholder="Section name" {...field} />*/}
                                         {/*            </FormControl>*/}
                                         {/*            <FormMessage/>*/}
                                         {/*        </FormItem>*/}
                                         {/*    )}*/}
                                         {/*/>*/}
+
+                                        <div>
+                                            <h6>Columns Customization</h6>
+
+                                            {
+                                                el.columns.map((el, columnIndex) => {
+                                                    return (
+                                                        <div>
+                                                            <p>Customize column for the section</p>
+                                                            <FormField
+                                                                control={form.control}
+                                                                name={`sections.${index}.columns.${columnIndex}.number_of_columns_that_section_contains`}
+                                                                render={({field}) => (
+                                                                    <FormItem className="min-w-[30%]">
+                                                                        <FormLabel>Name</FormLabel>
+                                                                        <FormControl>
+                                                                            <Input type="number"
+                                                                                   placeholder="Section name" {...field} />
+                                                                        </FormControl>
+                                                                        <FormMessage/>
+                                                                    </FormItem>
+                                                                )}
+                                                            />
+
+                                                            <FormField
+                                                                control={form.control}
+                                                                name={`sections.${index}.columns.${columnIndex}.max_seats_that_column_contains`}
+                                                                render={({field}) => (
+                                                                    <FormItem className="min-w-[30%]">
+                                                                        <FormLabel>Maximum seats that column contains</FormLabel>
+                                                                        <FormControl>
+                                                                            <Input type="number"
+                                                                                   placeholder="Section name" {...field} />
+                                                                        </FormControl>
+                                                                        <FormMessage/>
+                                                                    </FormItem>
+                                                                )}
+                                                            />
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
                                     </div>
                                 </div>
 
@@ -159,6 +173,7 @@ const Section = () => {
                                                     price: 0,
                                                     section_number: index + 2,
                                                     number_of_rows: 0,
+                                                    columns: []
                                                 })}
                                             >
 
@@ -188,7 +203,7 @@ const Section = () => {
             <div className="text-right">
                 <Button type="button" variant="link" onClick={moveToNextStep}>
                     Next
-                    <RightArrow/>
+                    <ArrowRight />
                 </Button>
             </div>
         </>
