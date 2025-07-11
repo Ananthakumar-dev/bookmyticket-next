@@ -23,7 +23,12 @@ const Layout = () => {
                                 price: 0,
                                 section_number: 1,
                                 number_of_rows: 0,
-                                columns: []
+                                number_of_columns_that_section_contains: 1,
+                                columns: [
+                                    {
+                                        max_seats_that_column_contains: 2
+                                    }
+                                ]
                             }
                         ],
                     }}

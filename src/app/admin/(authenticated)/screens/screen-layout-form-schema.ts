@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 const columnSchema = z.object({
-    number_of_columns_that_section_contains: z.number(),
     max_seats_that_column_contains: z.number()
 });
 
@@ -11,6 +10,7 @@ const sectionSchema = z.object({
     price: z.number(),
     section_number: z.number(),
     number_of_rows: z.number(),
+    number_of_columns_that_section_contains: z.number(),
     columns: z.array(columnSchema)
 });
 
